@@ -25,10 +25,13 @@ const CustomCarousel = () => {
                 <Image
                   borderRadius="md"
                   alt="carousel image"
-                  src={e}
+                  src={
+                    e || "https://via.placeholder.com/2000/?text=Cargando..."
+                  }
                   objectFit="cover"
                   w="100%"
                   h="100%"
+                  loading="lazy"
                 />
               </Box>
             ))}
