@@ -24,7 +24,7 @@ const ProductImage = () => {
 
   const srcBase = "https://via.placeholder.com/600";
 
-  const emptyArray = new Array(4).fill(0);
+  const emptyArray = new Array(2).fill(0);
 
   return (
     <>

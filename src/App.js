@@ -1,7 +1,7 @@
 import { Box, Center, ChakraProvider, Container, Grid } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import { CustomCarousel, Footer, Loader, Navigation } from "./app/components";
-import { About, Cart, Product, Shop } from "./app/pages";
+import { Cart, Product, Shop } from "./app/pages";
 
 function App() {
   return (

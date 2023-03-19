@@ -5,14 +5,16 @@ import {
   Heading,
   Skeleton,
   Text,
-  useBreakpointValue,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGlobal } from "../contexts/GlobalProvider";
 import { getProducts } from "../services";
 import { ProductBox } from "./../components";
 
 const Shop = () => {
+  const { hideLoader, showLoader } = useGlobal();
   const [data, setData] = useState([]);
 
   const responsiveGrid = useBreakpointValue({
@@ -22,10 +24,13 @@ const Shop = () => {
   useEffect(() => {
     const load = async () => {
       try {
+        showLoader();
         const res = await getProducts();
         setData(res.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        hideLoader();
       }
     };
 
@@ -72,7 +77,7 @@ const Shop = () => {
             <Skeleton isLoaded key={product.id}>
               <Link to={`/shop/${String(product.id)}`}>
                 <ProductBox
-                  img={"https://via.placeholder.com/600/?text=Estatico"}
+                  img={"https://via.placeholder.com/500/?text=Estatico"}
                   name={product.description}
                   amount={product.amount}
                 />
