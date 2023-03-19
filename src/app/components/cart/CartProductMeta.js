@@ -6,8 +6,7 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 
-export const CartProductMeta = (props) => {
-  const { image, name, description } = props;
+export const CartProductMeta = ({ image, name, description }) => {
   return (
     <Stack direction="row" spacing="5" width="full">
       <Image
@@ -16,15 +15,15 @@ export const CartProductMeta = (props) => {
         height="120px"
         fit="cover"
         src={image}
-        alt={name}
+        alt={description}
         draggable="false"
         loading="lazy"
       />
       <Box pt="4">
         <Stack spacing="0.5">
-          <Text fontWeight="medium">{name}</Text>
+          <Text fontWeight="medium">{description}</Text>
           <Text color={mode("gray.600", "gray.400")} fontSize="sm">
-            {description}
+            Lorem ipsum dolor sit amet, consectetur adipisicing
           </Text>
         </Stack>
       </Box>

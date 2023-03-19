@@ -1,6 +1,6 @@
 import { Box, Center, ChakraProvider, Container, Grid } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
-import { CustomCarousel, Footer, Navigation } from "./app/components";
+import { CustomCarousel, Footer, Loader, Navigation } from "./app/components";
 import { About, Cart, Product, Shop } from "./app/pages";
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
         </Box>
         <Footer />
       </Grid>
+      <Loader />
     </ChakraProvider>
   );
 }

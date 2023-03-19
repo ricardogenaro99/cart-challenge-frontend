@@ -6,6 +6,7 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import { useMemo } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { renderAmount } from "../../utils";
 
@@ -21,21 +22,26 @@ const OrderSummaryItem = (props) => {
   );
 };
 
-const CartOrderSummary = () => {
+const CartOrderSummary = ({ orders = [] }) => {
+  const subTotalMemo = useMemo(() => {
+    return orders.reduce((acc, curr) => {
+      return acc + curr.amount * curr.quantity;
+    }, 0);
+  }, [orders]);
+
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
       <Heading size="md">Resumen del pedido</Heading>
 
       <Stack spacing="6">
-        <OrderSummaryItem label="Subtotal" value={renderAmount(597)} />
+        {/* <OrderSummaryItem label="Subtotal" value={renderAmount(subTotalMemo)} /> */}
 
-        <OrderSummaryItem label="IGV" value={renderAmount(597 * 0.18)} />
         <Flex justify="space-between">
           <Text fontSize="lg" fontWeight="semibold">
             Total
           </Text>
           <Text fontSize="xl" fontWeight="extrabold">
-            {renderAmount(597 * 1.18)}
+            {renderAmount(subTotalMemo)}
           </Text>
         </Flex>
       </Stack>

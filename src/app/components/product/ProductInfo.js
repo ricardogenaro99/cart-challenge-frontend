@@ -10,17 +10,45 @@ import {
   NumberInputField,
   NumberInputStepper,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { useGlobal } from "../../contexts/GlobalProvider";
+import { addProductCart } from "../../services";
 import { renderAmount } from "../../utils";
 
 const ProductInfo = ({ productId, name, amount, description }) => {
+  const { cartIdGlobal, changeCartIdGlobal, hideLoader, showLoader } =
+    useGlobal();
   const [quantity, setQuantity] = useState(1);
+  const toast = useToast();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ productId, quantity });
+    try {
+      showLoader();
+      const payload = { cartId: cartIdGlobal, productId, quantity };
+      const res = await addProductCart(payload);
+      toast({
+        title: "Carrito actualizado",
+        status: "success",
+        isClosable: true,
+        position: "top",
+      });
+      setQuantity(1);
+      changeCartIdGlobal(res.data.id);
+    } catch (error) {
+      const errorMessage = error?.response?.data?.message || error?.message;
+      toast({
+        title: errorMessage,
+        status: "error",
+        isClosable: true,
+        position: "top",
+      });
+    } finally {
+      hideLoader();
+    }
   };
 
   return (

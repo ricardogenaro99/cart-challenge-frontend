@@ -7,26 +7,30 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getProducts } from "../services";
 import { ProductBox } from "./../components";
 
 const Shop = () => {
+  const [data, setData] = useState([]);
+
   const responsiveGrid = useBreakpointValue({
     base: "repeat(auto-fill, minmax(min(100%, 250px), 1fr))",
   });
 
-  const products = [
-    {
-      id: 1,
-      description: "Producto estatico 1",
-      amount: "100.50",
-    },
-    {
-      id: 2,
-      description: "Producto estatico 2",
-      amount: "24.99",
-    },
-  ];
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await getProducts();
+        setData(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    load();
+  }, []);
 
   return (
     <Box marginBottom={5} width="100%" paddingY={7}>
@@ -64,8 +68,8 @@ const Shop = () => {
           </Flex>
         </Box>
         <Grid h="auto" w="100%" templateColumns={responsiveGrid} gap="30px">
-          {products.map((product, i) => (
-            <Skeleton isLoaded key={i}>
+          {data.map((product) => (
+            <Skeleton isLoaded key={product.id}>
               <Link to={`/shop/${String(product.id)}`}>
                 <ProductBox
                   img={"https://via.placeholder.com/600/?text=Estatico"}
